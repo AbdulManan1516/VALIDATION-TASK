@@ -1,0 +1,31 @@
+# MediTrack SRS Validation Findings
+
+**Review basis:** Checklist `checklist/v0.1.md` applied to the baseline SRS in `srs/meditrack-srs.md`.  
+**Status:** Consolidated draft for discussion. The run files are prepared assessments; the required independent timed reviews and partner agreement still need to be completed by the students.
+
+## Summary
+
+The baseline SRS has 14 identified requirements, but many are not measurable or complete enough to verify. The most significant concern is the apparent conflict between the fixed appointment duration in R-04 and the configurable duration range in R-05. The SRS also needs a precise definition of double-booking prevention, privacy and access controls, reminder behavior, accessibility, and operational service targets before contract approval.
+
+## Findings and recommended clarification
+
+| Finding | Evidence | Why it matters | Recommended follow-up |
+|---|---|---|---|
+| F-01 — Appointment-duration conflict | R-04 says each appointment lasts 15 minutes. R-05 allows doctors to set a duration from 10 to 30 minutes. | Developers, doctors, and testers cannot determine which rule takes precedence. | Agree whether 15 minutes is a default, a fixed duration, or one option within the range; revise both requirements consistently. |
+| F-02 — Double-booking behavior is not verifiable | R-03 only says the system shall prevent double bookings. | The clinic’s top operational concern is not tied to a precise definition or acceptance test, especially for concurrent requests. | Define a conflicting slot and require that no more than one confirmed appointment can reserve the same doctor/time interval, including simultaneous booking attempts. |
+| F-03 — Booking performance is vague | R-02 says “quickly” without a threshold, unit, or stated load. | Performance cannot be tested, and the Monday-morning peak is not addressed. | Specify response-time limits, measurement conditions, and expected concurrent or peak workload. |
+| F-04 — Reminder requirements are incomplete | R-06 does not specify lead time, delivery channel, failure handling, or relevant patient contact preferences. | Reminders may arrive too late, through an unusable channel, or not at all, leaving missed appointments unaddressed. | Agree reminder timing and supported channels, along with delivery-failure behavior and consent/contact-data rules. |
+| F-05 — Privacy and security are underspecified | R-09 says records are stored “securely” without access roles or measurable safeguards. | Sensitive medical information could be exposed, and the data protection officer cannot validate the intended controls. | Define role-based access, authentication, protection of stored and transmitted data, audit expectations, and applicable retention/deletion rules with the clinic’s privacy lead. |
+| F-06 — Accessibility and non-digital support are unclear | R-08 says “user-friendly for all age groups” but has no testable criteria. R-01 covers online booking only. | Elderly patients may be unable to use the service or may be excluded if no assisted/non-digital route is defined. | Agree measurable accessibility criteria and document how staff-assisted and phone bookings fit the system and workflow. |
+| F-07 — Emergency walk-in handling is missing | R-10 allows receptionists to book walk-ins but does not distinguish emergency cases or define priority. | Emergency patients could be treated like routine appointments without appropriate escalation. | Define the clinic-approved emergency triage and escalation process, including system behavior and staff responsibility. |
+| F-08 — Appointment limit is ambiguous | R-11 limits patients to three “active” appointments without defining the term or how cancellations and completed appointments count. | Different users may interpret the booking limit differently, causing rejected or excessive bookings. | Define active status and state how booked, cancelled, completed, and no-show appointments affect the limit. |
+| F-09 — Availability requirement is not measurable | R-12 says “normal working hours” without actual hours or a service-availability target. | The service window and acceptable downtime cannot be tested or contractually assessed. | State the clinic operating schedule, time zone, availability target, planned maintenance rules, and outage expectations. |
+| F-10 — Cancellation behavior needs clarification | R-07 allows cancellation “at any time” and requires schedule update and receptionist notification, but defines no cutoff or notification timing. | Late cancellations may disrupt scheduling; staff cannot tell when notifications must occur. | Confirm whether cancellation is always permitted and specify notification/update timing and any clinic-approved exception or escalation process. |
+| F-11 — Phone booking and stakeholder responsibilities are incomplete | R-10 addresses walk-ins, but not phone bookings. No requirement describes clinic administrator or data protection officer functions. | Existing booking channels and named stakeholders may not be supported or represented in acceptance testing. | Add receptionist phone-booking behavior and clarify which administrative and data-protection workflows are in scope. |
+| F-12 — External payment policy is not traceable | R-13 refers to “clinic policy” without identifying the governing policy or version. | The requirement depends on an external source that implementers and testers may not have. | Attach or reference the approved policy with owner, version, and relevant payment rules. |
+
+## Consolidation and next steps
+
+The two draft runs agree on the key observed gaps, including the R-04/R-05 conflict, vague performance and security language, and missing emergency/accessibility details. This is not a substitute for the assignment’s required independent exercise: Student A and Student B should complete their runs separately, enter actual start/end times, record any `?` uncertainty, then meet to confirm or revise the consolidated findings.
+
+Before signing the contract, request revised, measurable requirements and acceptance criteria for the high-risk findings—especially double-booking prevention, medical-data access, emergency walk-ins, and peak-period performance. Have the clinic manager and relevant stakeholders approve the clarified rules.
